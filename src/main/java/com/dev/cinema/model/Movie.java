@@ -5,7 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString(of = {"title", "description"})
 @Entity
 @Table(name = "movie")
 public class Movie {
@@ -37,14 +41,5 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Movie{"
-                + "id=" + id
-                + " , title='" + title + '\''
-                + " , description='" + description + '\''
-                + '}';
     }
 }
