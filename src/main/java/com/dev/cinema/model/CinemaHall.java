@@ -10,12 +10,12 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString(of = {"id", "title", "description"})
+@ToString(of = {"id", "capacity", "description"})
 @Entity
-public class Movie {
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private Integer capacity;
     private String description;
 }
