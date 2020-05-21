@@ -32,8 +32,9 @@ public class MovieDaoImpl implements MovieDao {
             }
             throw new DataProcessingException("There was an error inserting " + movie, e);
         } finally {
-            assert session != null;
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -49,8 +50,9 @@ public class MovieDaoImpl implements MovieDao {
         } catch (Exception e) {
             throw new DataProcessingException("There was an error retrieving all movies", e);
         } finally {
-            assert session != null;
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }

@@ -33,8 +33,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             }
             throw new DataProcessingException("There was an error inserting " + cinemaHall, e);
         } finally {
-            assert session != null;
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -50,8 +51,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         } catch (Exception e) {
             throw new DataProcessingException("There was an error retrieving all halls", e);
         } finally {
-            assert session != null;
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }

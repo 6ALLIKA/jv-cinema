@@ -37,8 +37,9 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
             }
             throw new DataProcessingException("There was an error inserting " + movieSession, e);
         } finally {
-            assert session != null;
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -60,8 +61,9 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
             throw new DataProcessingException("Can't get movie sessions of movie with id "
                     + movieId, e);
         } finally {
-            assert session != null;
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }
