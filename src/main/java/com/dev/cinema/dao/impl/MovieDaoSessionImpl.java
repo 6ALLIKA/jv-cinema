@@ -22,7 +22,9 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Long id = (Long) session.save(movieSession);
             transaction.commit();
@@ -34,12 +36,17 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("There was an error inserting " + movieSession, e);
+        } finally {
+            assert session != null;
+            session.close();
         }
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> criteriaQuery = criteriaBuilder
                     .createQuery(MovieSession.class);
@@ -52,6 +59,9 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie sessions of movie with id "
                     + movieId, e);
+        } finally {
+            assert session != null;
+            session.close();
         }
     }
 }
