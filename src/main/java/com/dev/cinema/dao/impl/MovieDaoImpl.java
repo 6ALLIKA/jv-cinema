@@ -6,10 +6,10 @@ import com.dev.cinema.library.Dao;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.util.HibernateUtil;
 import java.util.List;
-import javax.persistence.criteria.CriteriaQuery;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
@@ -39,19 +39,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            CriteriaQuery<Movie> criteriaQuery
-                    = session.getCriteriaBuilder().createQuery(Movie.class);
-            criteriaQuery.from(Movie.class);
-            return session.createQuery(criteriaQuery).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("There was an error retrieving all movies", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Movie> query = session.createQuery(
+                    "FROM Movie", Movie.class);
+            return query.list();
         }
     }
 }

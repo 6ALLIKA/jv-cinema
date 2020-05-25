@@ -1,37 +1,36 @@
 package com.dev.cinema.dao.impl;
 
-import com.dev.cinema.dao.MovieSessionDao;
+import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.library.Dao;
-import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.User;
 import com.dev.cinema.util.HibernateUtil;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class MovieDaoSessionImpl implements MovieSessionDao {
+public class UserDaoImpl implements UserDao {
     private static final Logger LOGGER = Logger.getLogger(MovieDaoImpl.class);
 
     @Override
-    public MovieSession add(MovieSession movieSession) {
+    public User add(User user) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movieSession);
+            session.save(user);
             transaction.commit();
-            LOGGER.info(movieSession + " was inserted to DB");
-            return movieSession;
+            LOGGER.info(user + " was inserted to DB");
+            return user;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("There was an error inserting " + movieSession, e);
+            throw new DataProcessingException("There was an error inserting " + user, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -40,14 +39,12 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+    public Optional<User> findByEmail(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery(
-                    "FROM MovieSession ms JOIN FETCH ms.movie m JOIN FETCH ms.cinemaHall c "
-                            + "where m.id = :id and ms.showTime > :date", MovieSession.class);
-            query.setParameter("id", movieId);
-            query.setParameter("date", date.atStartOfDay());
-            return query.list();
+            Query<User> query = session.createQuery(
+                    "FROM User WHERE email = :email", User.class);
+            query.setParameter("email", email);
+            return query.uniqueResultOptional();
         }
     }
 }
