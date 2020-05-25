@@ -8,6 +8,7 @@ import com.dev.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -42,12 +43,14 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery(
+            Query<MovieSession> movieSessions = session.createQuery(
                     "FROM MovieSession ms JOIN FETCH ms.movie m JOIN FETCH ms.cinemaHall c "
                             + "where m.id = :id and ms.showTime > :date", MovieSession.class);
-            query.setParameter("id", movieId);
-            query.setParameter("date", date.atStartOfDay());
-            return query.list();
+            movieSessions.setParameter("id", movieId);
+            movieSessions.setParameter("date", date.atStartOfDay());
+            return movieSessions.getResultList();
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving all movie sessions  ", e);
         }
     }
 }

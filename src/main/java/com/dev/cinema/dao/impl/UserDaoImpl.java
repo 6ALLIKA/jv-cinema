@@ -7,6 +7,7 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.util.HibernateUtil;
 import java.util.Optional;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -45,6 +46,8 @@ public class UserDaoImpl implements UserDao {
                     "FROM User WHERE email = :email", User.class);
             query.setParameter("email", email);
             return query.uniqueResultOptional();
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving user  ", e);
         }
     }
 }

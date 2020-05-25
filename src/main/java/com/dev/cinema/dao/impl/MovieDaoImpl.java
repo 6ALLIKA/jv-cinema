@@ -7,6 +7,7 @@ import com.dev.cinema.model.Movie;
 import com.dev.cinema.util.HibernateUtil;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -40,9 +41,11 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> query = session.createQuery(
+            Query<Movie> movies = session.createQuery(
                     "FROM Movie", Movie.class);
-            return query.list();
+            return movies.getResultList();
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving all movies  ", e);
         }
     }
 }

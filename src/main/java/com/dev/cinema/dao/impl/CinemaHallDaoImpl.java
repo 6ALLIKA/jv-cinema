@@ -7,6 +7,7 @@ import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.util.HibernateUtil;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -42,9 +43,11 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<CinemaHall> query = session.createQuery(
+            Query<CinemaHall> cinemaHalls = session.createQuery(
                     "FROM CinemaHall", CinemaHall.class);
-            return query.list();
+            return cinemaHalls.getResultList();
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving all cinema halls ", e);
         }
     }
 }
