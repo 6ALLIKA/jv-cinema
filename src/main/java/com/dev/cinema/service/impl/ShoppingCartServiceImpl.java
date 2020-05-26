@@ -33,7 +33,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartDao.getByUser(user);
     }
 
-    @Overrideadded solution
+    @Override
     public void registerNewShoppingCart(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
