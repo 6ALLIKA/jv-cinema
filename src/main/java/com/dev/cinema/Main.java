@@ -1,9 +1,12 @@
 package com.dev.cinema;
 
+import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.library.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.User;
+import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
@@ -21,6 +24,8 @@ public class Main {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         movieService.add(movie);
         List<Movie> movieList = movieService.getAll();
+        System.out.println();
+        System.out.println();
         movieList.forEach(System.out::println);
 
         CinemaHall hall = new CinemaHall();
@@ -53,5 +58,22 @@ public class Main {
                 movieSessionService.findAvailableSessions(1L, dateAfter);
         System.out.println("day after");
         availableSessions2.forEach(System.out::println);
+
+        User user = new User();
+        user.setEmail("email");
+        user.setName("Alesha");
+        user.setPassword("password");
+
+        AuthenticationService authenticationService =
+                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+
+        System.out.println(authenticationService.register(user));
+
+        try {
+            authenticationService.login("email", "password");
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        }
+
     }
 }

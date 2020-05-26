@@ -7,13 +7,11 @@ import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoSessionImpl implements MovieSessionDao {
@@ -44,25 +42,15 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<MovieSession> criteriaQuery = criteriaBuilder
-                    .createQuery(MovieSession.class);
-            Root<MovieSession> root = criteriaQuery.from(MovieSession.class);
-            Predicate predicateId = criteriaBuilder.equal(root.get("movie"), movieId);
-            Predicate predicateDate = criteriaBuilder.greaterThan(root.get("showTime"),
-                    date.atStartOfDay());
-            criteriaQuery.where(predicateId, predicateDate);
-            return session.createQuery(criteriaQuery).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get movie sessions of movie with id "
-                    + movieId, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<MovieSession> movieSessions = session.createQuery(
+                    "FROM MovieSession ms JOIN FETCH ms.movie m JOIN FETCH ms.cinemaHall c "
+                            + "where m.id = :id and ms.showTime = :date", MovieSession.class);
+            movieSessions.setParameter("id", movieId);
+            movieSessions.setParameter("date", date.atStartOfDay());
+            return movieSessions.getResultList();
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving all movie sessions  ", e);
         }
     }
 }
