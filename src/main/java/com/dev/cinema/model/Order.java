@@ -1,30 +1,30 @@
 package com.dev.cinema.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
 @Getter
-@ToString(of = {"id", "user"})
+@Setter
+@ToString(of = {"id", "time"})
 @Entity
-public class ShoppingCart {
+@Table(name = "orders")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private LocalDateTime time;
     @OneToMany
     private List<Ticket> tickets;
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "shopping_cart_id")
+    @ManyToOne
     private User user;
 }
