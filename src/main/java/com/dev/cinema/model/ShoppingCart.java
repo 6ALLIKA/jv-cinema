@@ -15,7 +15,7 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString(of = {"id", "tickets", "user"})
+@ToString(of = {"id", "user"})
 @Entity
 public class ShoppingCart {
     @Id

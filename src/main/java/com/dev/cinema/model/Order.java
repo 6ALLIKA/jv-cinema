@@ -15,7 +15,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(of = {"id", "time"})
 @Entity
 @Table(name = "orders")
 public class Order {
