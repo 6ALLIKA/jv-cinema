@@ -6,6 +6,7 @@ import com.dev.cinema.library.Dao;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.util.HibernateUtil;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -14,7 +15,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class MovieDaoSessionImpl implements MovieSessionDao {
+public class MovieSessionDaoImpl implements MovieSessionDao {
     private static final Logger LOGGER = Logger.getLogger(MovieDaoImpl.class);
 
     @Override
@@ -45,9 +46,12 @@ public class MovieDaoSessionImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessions = session.createQuery(
                     "FROM MovieSession ms JOIN FETCH ms.movie m JOIN FETCH ms.cinemaHall c "
-                            + "where m.id = :id and ms.showTime = :date", MovieSession.class);
+                            + "where m.id = :id "
+                            + "and ms.showTime > :dateStart "
+                            + "and ms.showTime < :dateEnd", MovieSession.class);
             movieSessions.setParameter("id", movieId);
-            movieSessions.setParameter("date", date.atStartOfDay());
+            movieSessions.setParameter("dateStart", date.atStartOfDay());
+            movieSessions.setParameter("dateEnd", date.atTime(LocalTime.MAX));
             return movieSessions.getResultList();
         } catch (HibernateException e) {
             throw new DataProcessingException("Error retrieving all movie sessions  ", e);

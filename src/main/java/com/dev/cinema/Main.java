@@ -10,6 +10,7 @@ import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.ShoppingCartService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,6 +22,7 @@ public class Main {
     public static void main(String[] args) {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
+        movie.setDescription("sdg");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         movieService.add(movie);
         List<Movie> movieList = movieService.getAll();
@@ -40,13 +42,13 @@ public class Main {
         MovieSession session = new MovieSession();
         session.setCinemaHall(hall);
         session.setMovie(movie);
-        session.setShowTime(LocalDateTime.of(LocalDate.of(2020, 5, 26),
+        session.setShowTime(LocalDateTime.of(LocalDate.of(2020, 5, 30),
                 LocalTime.of(12, 30)));
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(session);
 
-        LocalDate dateBefore = LocalDate.of(2020, 5, 20);
+        LocalDate dateBefore = LocalDate.of(2020, 5, 30);
         LocalDate dateAfter = LocalDate.of(2020, 5, 22);
 
         List<MovieSession> availableSessions1 =
@@ -75,5 +77,9 @@ public class Main {
             e.printStackTrace();
         }
 
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+
+        shoppingCartService.addSession(session, user);
     }
 }
