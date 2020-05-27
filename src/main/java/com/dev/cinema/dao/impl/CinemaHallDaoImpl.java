@@ -25,7 +25,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
-
             LOGGER.info(cinemaHall + " was inserted to DB");
             return cinemaHall;
         } catch (Exception e) {
