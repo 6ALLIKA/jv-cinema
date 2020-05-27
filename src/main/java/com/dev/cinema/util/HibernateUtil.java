@@ -5,11 +5,11 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
-    private HibernateUtil(){
+    private static final SessionFactory sessionFactory = initSessionFactory();
+
+    private HibernateUtil() {
         throw new IllegalStateException("Utility class");
     }
-
-    private static SessionFactory sessionFactory = initSessionFactory();
 
     public static SessionFactory getSessionFactory() {
         return sessionFactory;

@@ -7,7 +7,7 @@ import java.security.SecureRandom;
 public class HashUtil {
     private static final String HASHABLE = "SHA-512";
 
-    private HashUtil(){
+    private HashUtil() {
         throw new IllegalStateException("Utility class");
     }
 
