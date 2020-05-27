@@ -14,7 +14,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class UserDaoImpl implements UserDao {
-    private static final Logger LOGGER = Logger.getLogger(MovieDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 
     @Override
     public User add(User user) {

@@ -15,7 +15,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
-    private static final Logger LOGGER = Logger.getLogger(MovieDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
 
     @Override
     public Order add(Order order) {

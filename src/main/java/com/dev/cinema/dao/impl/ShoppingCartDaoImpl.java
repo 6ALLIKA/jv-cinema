@@ -14,7 +14,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
-    private static final Logger LOGGER = Logger.getLogger(MovieDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(ShoppingCartDaoImpl.class);
 
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
