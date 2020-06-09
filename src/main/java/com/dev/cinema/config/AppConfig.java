@@ -1,12 +1,5 @@
 package com.dev.cinema.config;
 
-import com.dev.cinema.model.CinemaHall;
-import com.dev.cinema.model.Movie;
-import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.model.Order;
-import com.dev.cinema.model.ShoppingCart;
-import com.dev.cinema.model.Ticket;
-import com.dev.cinema.model.User;
 import java.util.Properties;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,13 +48,7 @@ public class AppConfig {
         properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
 
         factoryBean.setHibernateProperties(properties);
-        factoryBean.setAnnotatedClasses(CinemaHall.class);
-        factoryBean.setAnnotatedClasses(Movie.class);
-        factoryBean.setAnnotatedClasses(MovieSession.class);
-        factoryBean.setAnnotatedClasses(Order.class);
-        factoryBean.setAnnotatedClasses(ShoppingCart.class);
-        factoryBean.setAnnotatedClasses(Ticket.class);
-        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setPackagesToScan("com.dev.cinema.model");
 
         return factoryBean;
     }
