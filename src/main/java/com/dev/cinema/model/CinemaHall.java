@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString(of = {"id", "capacity", "description"})
 @Entity
-@Table(name = "cinemaHalls")
+@Table(name = "cinema_halls")
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

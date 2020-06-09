@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @ToString(of = {"id", "movie", "cinemaHall", "showTime"})
 @Entity
-@Table(name = "movieSessions")
+@Table(name = "movie_sessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
