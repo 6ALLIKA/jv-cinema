@@ -22,7 +22,7 @@ public class CinemaHallController {
     @Autowired
     private CinemaHallMapper cinemaHallMapper;
 
-    @PostMapping("/add")
+    @PostMapping
     public CinemaHall add(@RequestBody CinemaHallRequestDto dto) {
         return cinemaHallService.add(cinemaHallMapper.getCinemaHallFromRequest(dto));
     }
