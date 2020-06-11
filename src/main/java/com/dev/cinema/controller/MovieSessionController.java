@@ -29,7 +29,7 @@ public class MovieSessionController {
         return movieSessionService.add(movieSessionMapper.getMovieSessionFromRequest(dto));
     }
 
-    @GetMapping("/available")
+    @GetMapping("/available{movieId}{date}")
     public List<MovieSessionResponseDto>
             getAvailableMovieSession(@PathVariable("id") Long movieId,
                                 @PathVariable("date") LocalDate date) {

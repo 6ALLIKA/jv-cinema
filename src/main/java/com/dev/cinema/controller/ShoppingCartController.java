@@ -27,8 +27,7 @@ public class ShoppingCartController {
     ShoppingCartMapper shoppingCartMapper;
 
     @PostMapping("/add-moviesession")
-    public void add(@RequestBody ShoppingCartWithSessionRequestDto dto,
-                            @PathVariable("userId") Long id) {
+    public void add(@RequestBody ShoppingCartWithSessionRequestDto dto) {
         ArrayList<Object> array = shoppingCartMapper.getMovieSessionInShoppingCartFromRequest(dto);
         shoppingCartService.addSession((MovieSession) array.get(0), (User) array.get(1));
     }

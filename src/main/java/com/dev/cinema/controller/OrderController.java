@@ -28,7 +28,7 @@ public class OrderController {
         return orderService.completeOrder(orderMapper.getOrderFromRequest(dto));
     }
 
-    @GetMapping
+    @GetMapping("{userId}")
     public List<OrderResponseDto> getAll(@PathVariable("userId") Long userId) {
         return orderService.getOrderHistory(userId)
                 .stream()
