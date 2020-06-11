@@ -1,7 +1,7 @@
 package com.dev.cinema.controller;
 
-import com.dev.cinema.model.dto.mapperdto.UserMapper;
 import com.dev.cinema.model.User;
+import com.dev.cinema.model.dto.mapperdto.UserMapper;
 import com.dev.cinema.model.dto.user.UserRequestDto;
 import com.dev.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

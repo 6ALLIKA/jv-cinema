@@ -18,7 +18,7 @@ public class OrderMapper {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    public OrderResponseDto getOrderResponce (Order order) {
+    public OrderResponseDto getOrderResponce(Order order) {
         OrderResponseDto dto = new OrderResponseDto();
         dto.setOrderDate(order.getTime().toString());
         dto.setUserId(order.getUser().getId());
@@ -29,12 +29,12 @@ public class OrderMapper {
         return dto;
     }
 
-    public Order getOrderFromRequest (OrderRequestDto dto) {
+    public Order getOrderFromRequest(OrderRequestDto dto) {
         Order order = new Order();
         order.setTime(LocalDateTime.now());
         order.setUser(userService.getById(dto.getUserId()));
         order.setTickets(shoppingCartService
-                .getByUserId(order.getUser())
+                .getByUserId(order.getUser().getId())
                 .getTickets());
         return order;
     }

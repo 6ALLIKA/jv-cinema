@@ -30,6 +30,4 @@ public class MovieServiceImpl implements MovieService {
     public Movie getById(Long id) {
         return movieDao.getById(id);
     }
-
-
 }

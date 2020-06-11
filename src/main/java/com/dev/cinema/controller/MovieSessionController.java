@@ -30,8 +30,9 @@ public class MovieSessionController {
     }
 
     @GetMapping("/available")
-    public List<MovieSessionResponseDto> getAvailableMovieSession (@PathVariable("id") Long movieId,
-                                                                   @PathVariable("date") LocalDate date) {
+    public List<MovieSessionResponseDto>
+            getAvailableMovieSession(@PathVariable("id") Long movieId,
+                                @PathVariable("date") LocalDate date) {
         return movieSessionService
                 .findAvailableSessions(movieId, date)
                 .stream()

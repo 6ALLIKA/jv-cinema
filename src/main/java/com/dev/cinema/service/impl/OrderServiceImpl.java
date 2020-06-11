@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order completeOrder(Order order) {
-        ShoppingCart userShoppingCart = shoppingCartService.getByUserId(order.getUser());
+        ShoppingCart userShoppingCart = shoppingCartService.getByUserId(order.getUser().getId());
         shoppingCartService.clear(userShoppingCart);
         return orderDao.add(order);
     }

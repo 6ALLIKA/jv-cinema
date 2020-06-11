@@ -18,8 +18,7 @@ public class MovieSessionMapper {
     @Autowired
     MovieService movieService;
 
-
-    public MovieSessionResponseDto getMovieSessionResponce (MovieSession movieSession) {
+    public MovieSessionResponseDto getMovieSessionResponce(MovieSession movieSession) {
         MovieSessionResponseDto dto = new MovieSessionResponseDto();
         dto.setId(movieSession.getId());
         dto.setMovieId(movieSession.getMovie().getId());
@@ -29,7 +28,7 @@ public class MovieSessionMapper {
         return dto;
     }
 
-    public MovieSession getMovieSessionFromRequest (MovieSessionRequestDto dto) {
+    public MovieSession getMovieSessionFromRequest(MovieSessionRequestDto dto) {
         MovieSession movieSession = new MovieSession();
         movieSession.setShowTime(dto.getShowTime());
         movieSession.setMovie(movieService.getById(dto.getMovieId()));

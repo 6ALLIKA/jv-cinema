@@ -24,7 +24,7 @@ public class ShoppingCartMapper {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    public ShoppingCartResponseDto getShoppingCartResponce (ShoppingCart shoppingCart) {
+    public ShoppingCartResponseDto getShoppingCartResponce(ShoppingCart shoppingCart) {
         ShoppingCartResponseDto dto = new ShoppingCartResponseDto();
         dto.setUserId(shoppingCart.getUser().getId());
         dto.setTicketIds(shoppingCart.getTickets()
@@ -34,16 +34,20 @@ public class ShoppingCartMapper {
         return dto;
     }
 
-    public ShoppingCart getShoppingCartWithTicketsFromRequest (ShoppingCartWithTicketsRequestDto dto) {
+    public ShoppingCart
+            getShoppingCartWithTicketsFromRequest(ShoppingCartWithTicketsRequestDto dto) {
+
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(userService.getById(dto.getUserId()));
         shoppingCart.setTickets(shoppingCartService
-                .getByUserId(shoppingCart.getUser())
+                .getByUserId(shoppingCart.getUser().getId())
                 .getTickets());
         return shoppingCart;
     }
 
-    public ArrayList<Object> getMovieSessionInShoppingCartFromRequest (ShoppingCartWithSessionRequestDto dto) {
+    public ArrayList<Object>
+            getMovieSessionInShoppingCartFromRequest(ShoppingCartWithSessionRequestDto dto) {
+
         MovieSession movieSession = movieSessionService.getById(dto.getMovieSessionId());
         User user = userService.getById(dto.getUserId());
         ArrayList<Object> arrayList = new ArrayList<>();

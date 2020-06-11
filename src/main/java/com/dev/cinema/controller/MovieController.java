@@ -1,7 +1,7 @@
 package com.dev.cinema.controller;
 
-import com.dev.cinema.model.dto.mapperdto.MovieMapper;
 import com.dev.cinema.model.Movie;
+import com.dev.cinema.model.dto.mapperdto.MovieMapper;
 import com.dev.cinema.model.dto.movie.MovieRequestDto;
 import com.dev.cinema.model.dto.movie.MovieResponseDto;
 import com.dev.cinema.service.MovieService;
