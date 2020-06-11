@@ -64,4 +64,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             throw new DataProcessingException("Error retrieving all movie sessions  ", e);
         }
     }
+
+    @Override
+    public MovieSession getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(MovieSession.class, id);
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving movie by id " + id, e);
+        }
+    }
 }

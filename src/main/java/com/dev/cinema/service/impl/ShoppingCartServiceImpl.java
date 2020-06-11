@@ -27,14 +27,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ticket.setMovieSession(movieSession);
         ticket.setUser(user);
         ticketDao.add(ticket);
-        ShoppingCart shoppingCart = shoppingCartDao.getByUser(user);
+        ShoppingCart shoppingCart = shoppingCartDao.getByUserId(user.getId());
         shoppingCart.getTickets().add(ticket);
         shoppingCartDao.update(shoppingCart);
     }
 
     @Override
-    public ShoppingCart getByUser(User user) {
-        return shoppingCartDao.getByUser(user);
+    public ShoppingCart getByUserId(Long userId) {
+        return shoppingCartDao.getByUserId(userId);
     }
 
     @Override
@@ -48,5 +48,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void clear(ShoppingCart shoppingCart) {
         shoppingCart.getTickets().clear();
         shoppingCartDao.update(shoppingCart);
+    }
+
+    @Override
+    public ShoppingCart getById(Long id) {
+        return shoppingCartDao.getById(id);
     }
 }

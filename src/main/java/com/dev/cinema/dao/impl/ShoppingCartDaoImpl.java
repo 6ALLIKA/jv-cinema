@@ -3,7 +3,6 @@ package com.dev.cinema.dao.impl;
 import com.dev.cinema.dao.ShoppingCartDao;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.ShoppingCart;
-import com.dev.cinema.model.User;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -47,12 +46,12 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     }
 
     @Override
-    public ShoppingCart getByUser(User user) {
+    public ShoppingCart getByUserId(Long userId) {
         try (Session session = sessionFactory.openSession()) {
             Query<ShoppingCart> query = session.createQuery(
                     "FROM ShoppingCart sc LEFT JOIN FETCH sc.tickets t "
-                            + " WHERE sc.user = :user", ShoppingCart.class);
-            query.setParameter("user", user);
+                            + " WHERE sc.user.id = :id", ShoppingCart.class);
+            query.setParameter("id", userId);
             return query.getSingleResult();
         } catch (HibernateException e) {
             throw new DataProcessingException("Error retrieving user  ", e);
@@ -79,6 +78,15 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public ShoppingCart getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(ShoppingCart.class, id);
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving movie by id " + id, e);
         }
     }
 }

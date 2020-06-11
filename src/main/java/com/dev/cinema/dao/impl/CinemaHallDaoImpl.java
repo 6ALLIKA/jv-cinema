@@ -56,4 +56,13 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             throw new DataProcessingException("Error retrieving all cinema halls ", e);
         }
     }
+
+    @Override
+    public CinemaHall getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(CinemaHall.class, id);
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving cinema hall by id " + id, e);
+        }
+    }
 }
