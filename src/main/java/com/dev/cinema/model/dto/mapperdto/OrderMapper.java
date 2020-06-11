@@ -6,7 +6,6 @@ import com.dev.cinema.model.dto.order.OrderRequestDto;
 import com.dev.cinema.model.dto.order.OrderResponseDto;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ public class OrderMapper {
 
     public OrderResponseDto getOrderResponce(Order order) {
         OrderResponseDto dto = new OrderResponseDto();
-        dto.setOrderDate(order.getTime().toString());
+        dto.setOrderDate(order.getTime());
         dto.setUserId(order.getUser().getId());
         dto.setTicketIds(order.getTickets()
                 .stream()
@@ -31,7 +30,7 @@ public class OrderMapper {
 
     public Order getOrderFromRequest(OrderRequestDto dto) {
         Order order = new Order();
-        order.setTime(LocalDateTime.now());
+        order.setTime(dto.getOrderTime());
         order.setUser(userService.getById(dto.getUserId()));
         order.setTickets(shoppingCartService
                 .getByUserId(order.getUser().getId())

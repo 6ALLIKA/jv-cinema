@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/movie")
 public class MovieController {
     @Autowired
-    MovieService movieService;
+    private MovieService movieService;
     @Autowired
-    MovieMapper movieMapper;
+    private MovieMapper movieMapper;
 
     @PostMapping("/add")
     public Movie add(@RequestBody MovieRequestDto dto) {

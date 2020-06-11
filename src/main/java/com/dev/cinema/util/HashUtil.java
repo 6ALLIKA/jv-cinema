@@ -9,10 +9,6 @@ import org.springframework.stereotype.Service;
 public class HashUtil {
     private static final String HASHABLE = "SHA-512";
 
-    private HashUtil() {
-        throw new IllegalStateException("Utility class");
-    }
-
     public byte[] getSalt() {
         SecureRandom secureRandom = new SecureRandom();
         byte[] salt = new byte[16];

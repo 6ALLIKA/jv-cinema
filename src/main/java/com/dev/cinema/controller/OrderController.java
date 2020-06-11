@@ -9,27 +9,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/order")
 public class OrderController {
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     @Autowired
-    OrderMapper orderMapper;
+    private OrderMapper orderMapper;
 
     @PostMapping("/add")
     public Order add(@RequestBody OrderRequestDto dto) {
         return orderService.completeOrder(orderMapper.getOrderFromRequest(dto));
     }
 
-    @GetMapping("{userId}")
-    public List<OrderResponseDto> getAll(@PathVariable("userId") Long userId) {
+    @GetMapping
+    public List<OrderResponseDto> getAll(@RequestParam("userId") Long userId) {
         return orderService.getOrderHistory(userId)
                 .stream()
                 .map(orderMapper::getOrderResponce)

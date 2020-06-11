@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class MovieSessionMapper {
     @Autowired
-    MovieSessionService movieSessionService;
+    private MovieSessionService movieSessionService;
     @Autowired
-    CinemaHallService cinemaHallService;
+    private CinemaHallService cinemaHallService;
     @Autowired
-    MovieService movieService;
+    private MovieService movieService;
 
     public MovieSessionResponseDto getMovieSessionResponce(MovieSession movieSession) {
         MovieSessionResponseDto dto = new MovieSessionResponseDto();
