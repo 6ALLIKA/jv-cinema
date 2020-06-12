@@ -8,9 +8,11 @@ public interface ShoppingCartService {
 
     void addSession(MovieSession movieSession, User user);
 
-    ShoppingCart getByUser(User user);
+    ShoppingCart getByUserId(Long userId);
 
     void registerNewShoppingCart(User user);
 
     void clear(ShoppingCart shoppingCart);
+
+    ShoppingCart getById(Long id);
 }

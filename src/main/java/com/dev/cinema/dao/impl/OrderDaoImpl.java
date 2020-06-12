@@ -3,7 +3,6 @@ package com.dev.cinema.dao.impl;
 import com.dev.cinema.dao.OrderDao;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.Order;
-import com.dev.cinema.model.User;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -48,15 +47,24 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOrdersByUser(User user) {
+    public List<Order> getOrdersByUserId(Long userId) {
         try (Session session = sessionFactory.openSession()) {
             Query<Order> query = session.createQuery(
                     "SELECT DISTINCT o FROM Order o JOIN FETCH o.tickets t "
-                            + "WHERE o.user = :user", Order.class);
-            query.setParameter("user", user);
+                            + "WHERE o.user.id = :id", Order.class);
+            query.setParameter("id", userId);
             return query.list();
         } catch (HibernateException e) {
             throw new DataProcessingException("Error retrieving user  ", e);
+        }
+    }
+
+    @Override
+    public Order getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Order.class, id);
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving movie by id " + id, e);
         }
     }
 }

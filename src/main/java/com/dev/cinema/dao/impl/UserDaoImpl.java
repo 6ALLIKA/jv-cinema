@@ -54,7 +54,16 @@ public class UserDaoImpl implements UserDao {
             query.setParameter("email", email);
             return query.uniqueResultOptional();
         } catch (HibernateException e) {
-            throw new DataProcessingException("Error retrieving user  ", e);
+            throw new DataProcessingException("Error retrieving user by email" + email, e);
+        }
+    }
+
+    @Override
+    public User getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(User.class, id);
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Error retrieving user by id " + id, e);
         }
     }
 }
