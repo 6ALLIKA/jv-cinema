@@ -39,7 +39,7 @@ public class MovieSessionController {
         return movieSessionService
                 .findAvailableSessions(movieId, date)
                 .stream()
-                .map(movieSessionMapper::getMovieSessionResponce)
+                .map(movieSessionMapper::getMovieSessionResponse)
                 .collect(Collectors.toList());
     }
 }

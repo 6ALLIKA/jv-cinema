@@ -32,7 +32,7 @@ public class OrderController {
     public List<OrderResponseDto> getAll(@PathVariable("userId") Long userId) {
         return orderService.getOrderHistory(userId)
                 .stream()
-                .map(orderMapper::getOrderResponce)
+                .map(orderMapper::getOrderResponse)
                 .collect(Collectors.toList());
     }
 }

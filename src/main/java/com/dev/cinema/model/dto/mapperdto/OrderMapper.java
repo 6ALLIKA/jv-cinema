@@ -17,7 +17,7 @@ public class OrderMapper {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    public OrderResponseDto getOrderResponce(Order order) {
+    public OrderResponseDto getOrderResponse(Order order) {
         OrderResponseDto dto = new OrderResponseDto();
         dto.setOrderDate(order.getTime());
         dto.setUserId(order.getUser().getId());

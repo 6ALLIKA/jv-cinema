@@ -17,7 +17,7 @@ public class ShoppingCartMapper {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    public ShoppingCartResponseDto getShoppingCartResponce(ShoppingCart shoppingCart) {
+    public ShoppingCartResponseDto getShoppingCartResponse(ShoppingCart shoppingCart) {
         ShoppingCartResponseDto dto = new ShoppingCartResponseDto();
         dto.setUserId(shoppingCart.getUser().getId());
         dto.setTicketIds(shoppingCart.getTickets()

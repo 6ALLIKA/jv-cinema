@@ -31,7 +31,7 @@ public class MovieController {
     public List<MovieResponseDto> getAll() {
         return movieService.getAll()
                 .stream()
-                .map(movieMapper::getMovieResponce)
+                .map(movieMapper::getMovieResponse)
                 .collect(Collectors.toList());
     }
 }

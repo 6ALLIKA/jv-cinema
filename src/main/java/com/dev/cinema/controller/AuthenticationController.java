@@ -20,7 +20,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public UserResponseDto register(@RequestBody UserRequestDto dto) {
-        return userMapper.getUserResponce(authenticationService
+        return userMapper.getUserResponse(authenticationService
                         .register(userMapper
                                 .getUserFromRequest(dto)));
     }

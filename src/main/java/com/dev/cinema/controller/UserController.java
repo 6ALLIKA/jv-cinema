@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping("/by-email/{email}/")
     public UserResponseDto getUserByEmail(@PathVariable("email") String email) {
-        User user = userService.findByEmail(email).get();
-        return userMapper.getUserResponce(user);
+        User user = userService.findByEmail(email).orElseThrow(() -> new RuntimeException("Not valid email"));
+        return userMapper.getUserResponse(user);
     }
 }
