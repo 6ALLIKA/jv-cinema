@@ -3,8 +3,9 @@ package com.dev.cinema.dao.impl;
 import com.dev.cinema.dao.OrderDao;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.Order;
+import com.dev.cinema.model.User;
 import java.util.List;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,9 +14,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Log4j
 @Repository
 public class OrderDaoImpl implements OrderDao {
-    private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -32,7 +33,7 @@ public class OrderDaoImpl implements OrderDao {
             transaction = session.beginTransaction();
             session.save(order);
             transaction.commit();
-            LOGGER.info(order + " was inserted to DB");
+            log.info(order + " was inserted to DB");
             return order;
         } catch (Exception e) {
             if (transaction != null) {
@@ -47,12 +48,12 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOrdersByUserId(Long userId) {
+    public List<Order> getOrdersByUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             Query<Order> query = session.createQuery(
                     "SELECT DISTINCT o FROM Order o JOIN FETCH o.tickets t "
-                            + "WHERE o.user.id = :id", Order.class);
-            query.setParameter("id", userId);
+                            + "WHERE o.user = :user", Order.class);
+            query.setParameter("user", user);
             return query.list();
         } catch (HibernateException e) {
             throw new DataProcessingException("Error retrieving user  ", e);

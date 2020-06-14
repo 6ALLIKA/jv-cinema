@@ -4,7 +4,7 @@ import com.dev.cinema.dao.CinemaHallDao;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.CinemaHall;
 import java.util.List;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,9 +13,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Log4j
 @Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private static final Logger LOGGER = Logger.getLogger(CinemaHallDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -32,7 +32,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
-            LOGGER.info(cinemaHall + " was inserted to DB");
+            log.info(cinemaHall + " was inserted to DB");
             return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
