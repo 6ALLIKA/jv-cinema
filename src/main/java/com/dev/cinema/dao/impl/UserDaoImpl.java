@@ -4,7 +4,7 @@ import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.User;
 import java.util.Optional;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,9 +13,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Log4j
 @Repository
 public class UserDaoImpl implements UserDao {
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-            LOGGER.info(user + " was inserted to DB");
+            log.info(user + " was inserted to DB");
             return user;
         } catch (Exception e) {
             if (transaction != null) {

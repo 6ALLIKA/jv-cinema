@@ -3,16 +3,16 @@ package com.dev.cinema.dao.impl;
 import com.dev.cinema.dao.TicketDao;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.Ticket;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Log4j
 @Repository
 public class TicketDaoImpl implements TicketDao {
-    private static final Logger LOGGER = Logger.getLogger(TicketDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -29,7 +29,7 @@ public class TicketDaoImpl implements TicketDao {
             transaction = session.beginTransaction();
             session.save(ticket);
             transaction.commit();
-            LOGGER.info(ticket + " was inserted to DB");
+            log.info(ticket + " was inserted to DB");
             return ticket;
         } catch (Exception e) {
             if (transaction != null) {

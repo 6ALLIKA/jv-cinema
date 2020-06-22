@@ -4,6 +4,7 @@ import com.dev.cinema.model.dto.mapperdto.UserMapper;
 import com.dev.cinema.model.dto.user.UserRequestDto;
 import com.dev.cinema.model.dto.user.UserResponseDto;
 import com.dev.cinema.security.AuthenticationService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class AuthenticationController {
     private UserMapper userMapper;
 
     @PostMapping("/register")
-    public UserResponseDto register(@RequestBody UserRequestDto dto) {
+    public UserResponseDto register(@RequestBody @Valid UserRequestDto dto) {
         return userMapper.getUserResponse(authenticationService
                         .register(userMapper
                                 .getUserFromRequest(dto)));

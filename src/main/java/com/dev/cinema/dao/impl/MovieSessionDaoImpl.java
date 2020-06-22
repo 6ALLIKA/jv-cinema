@@ -6,7 +6,7 @@ import com.dev.cinema.model.MovieSession;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,9 +15,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+@Log4j
 @Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    private static final Logger LOGGER = Logger.getLogger(MovieSessionDaoImpl.class);
     private final SessionFactory sessionFactory;
 
     @Autowired
@@ -34,7 +34,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
-            LOGGER.info(movieSession + " was inserted to DB");
+            log.info(movieSession + " was inserted to DB");
             return movieSession;
         } catch (Exception e) {
             if (transaction != null) {
