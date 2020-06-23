@@ -28,6 +28,7 @@ public class InjectDataController {
     public void init() {
         injectRoles();
         injectAdmin();
+        injectUser();
     }
 
     private void injectRoles() {
@@ -48,5 +49,15 @@ public class InjectDataController {
         admin.setRoles(Set.of(adminRole));
         userService.add(admin);
         log.info("A user with ADMIN role was injected to DB");
+    }
+
+    private void injectUser() {
+        User user = new User();
+        user.setEmail("user@gmail.com");
+        user.setPassword(passwordEncoder.encode("1234"));
+        Role userRole = roleService.getRoleByName("USER");
+        user.setRoles(Set.of(userRole));
+        userService.add(user);
+        log.info("A user with USER role was injected to DB");
     }
 }
