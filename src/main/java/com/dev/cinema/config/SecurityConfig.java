@@ -1,41 +1,46 @@
 package com.dev.cinema.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
+
+    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .passwordEncoder(getEncoder())
-                .withUser("user")
-                .password(getEncoder().encode("password"))
-                .roles("USER");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
+        http.authorizeRequests()
+                .antMatchers("/authentication/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/movie/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/cinema-hall/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/movie-session/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/movie/**").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/cinema-hall/**").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/movie-session/**").hasRole("USER")
+                .antMatchers("/shopping-cart/**", "/order/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .permitAll()
+                .formLogin().permitAll()
                 .and()
                 .httpBasic()
                 .and()
                 .csrf().disable();
-    }
-
-    @Bean
-    public PasswordEncoder getEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

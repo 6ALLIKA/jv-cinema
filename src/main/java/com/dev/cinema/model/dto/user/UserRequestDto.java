@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-@MatchingPasswordsConstraint(password = "password", repeatedPassword = "repeatedPassword")
+@MatchingPasswordsConstraint
 public class UserRequestDto {
     @NotNull
     private String name;
