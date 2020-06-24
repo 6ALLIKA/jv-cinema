@@ -20,6 +20,7 @@ As admin you can adding new movies, movie sessions and cinema halls.
 ---
 
 # <a name="structure"></a>Project Structure
+
 * Java 11
 * Maven 3.6.0
 * Hibernate 5.4.5.Final
@@ -41,7 +42,6 @@ As admin you can adding new movies, movie sessions and cinema halls.
 * Mysql connector java 8.0.17
 * Hibernate validator 6.1.5.Final
 * Log4j 1.2.17
-<hr>
 
 ---
 
