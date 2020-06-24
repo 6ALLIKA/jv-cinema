@@ -20,14 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/order")
 public class OrderController {
+    private final OrderService orderService;
+    private final OrderMapper orderMapper;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
+
     @Autowired
-    private OrderService orderService;
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+    public OrderController(OrderService orderService, OrderMapper orderMapper,
+                           UserService userService, ShoppingCartService shoppingCartService) {
+        this.orderService = orderService;
+        this.orderMapper = orderMapper;
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @PostMapping
     public String add(Authentication authentication) {

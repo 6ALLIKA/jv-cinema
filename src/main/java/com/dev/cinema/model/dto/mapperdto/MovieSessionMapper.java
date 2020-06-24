@@ -5,18 +5,19 @@ import com.dev.cinema.model.dto.moviesession.MovieSessionRequestDto;
 import com.dev.cinema.model.dto.moviesession.MovieSessionResponseDto;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
-import com.dev.cinema.service.MovieSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MovieSessionMapper {
+    private final CinemaHallService cinemaHallService;
+    private final MovieService movieService;
+
     @Autowired
-    private MovieSessionService movieSessionService;
-    @Autowired
-    private CinemaHallService cinemaHallService;
-    @Autowired
-    private MovieService movieService;
+    public MovieSessionMapper(CinemaHallService cinemaHallService, MovieService movieService) {
+        this.cinemaHallService = cinemaHallService;
+        this.movieService = movieService;
+    }
 
     public MovieSessionResponseDto getMovieSessionResponse(MovieSession movieSession) {
         MovieSessionResponseDto dto = new MovieSessionResponseDto();

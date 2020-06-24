@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    private final UserService userService;
+    private final UserMapper userMapper;
+
     @Autowired
-    private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
+    public UserController(UserService userService, UserMapper userMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
+    }
 
     @GetMapping("/by-email/{email}/")
     public UserResponseDto getUserByEmail(@PathVariable("email") String email) {
