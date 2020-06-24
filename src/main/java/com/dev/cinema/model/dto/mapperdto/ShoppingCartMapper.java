@@ -3,18 +3,11 @@ package com.dev.cinema.model.dto.mapperdto;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.dto.shoppingcart.ShoppingCartResponseDto;
-import com.dev.cinema.service.ShoppingCartService;
-import com.dev.cinema.service.UserService;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ShoppingCartMapper {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ShoppingCartService shoppingCartService;
 
     public ShoppingCartResponseDto getShoppingCartResponse(ShoppingCart shoppingCart) {
         ShoppingCartResponseDto dto = new ShoppingCartResponseDto();

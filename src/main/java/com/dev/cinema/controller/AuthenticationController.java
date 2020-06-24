@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/authentication")
 public class AuthenticationController {
+    private final AuthenticationService authenticationService;
+    private final UserMapper userMapper;
+
     @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
-    private UserMapper userMapper;
+    public AuthenticationController(UserMapper userMapper,
+                                    AuthenticationService authenticationService) {
+        this.userMapper = userMapper;
+        this.authenticationService = authenticationService;
+    }
 
     @PostMapping("/register")
     public UserResponseDto register(@RequestBody @Valid UserRequestDto dto) {
