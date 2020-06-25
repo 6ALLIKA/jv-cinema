@@ -1,4 +1,6 @@
-# Cinema-project
+# Cinema-project [![Build Status](https://travis-ci.com/6ALLIKA/jv-cinema.svg?branch=master)](https://travis-ci.org/6ALLIKA/jv-cinema)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=6ALLIKA_jv-cinema&metric=alert_status)](https://sonarcloud.io/dashboard?id=6ALLIKA_jv-cinema)
 
 ---
 
@@ -51,9 +53,7 @@ As admin you can adding new movies, movie sessions and cinema halls.
 
 2. Add Java SDK 11 or above in Project Structure.
 
-3. Configure Tomcat:
-add the artifact cinema-project:war exploded;
-add as URL http://localhost:8080/
+3. Configure [Tomcat](https://habr.com/ru/post/274587/ "Example").
 
 4. Install MySQL if you don't have it and start MySQLWorkbench.
 
